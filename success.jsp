@@ -1,9 +1,18 @@
 <%@ page language="java" %>
 
+<%
+    String course = (String) session.getAttribute("course");
+    String name = (String) session.getAttribute("name");
+    String roll = (String) session.getAttribute("roll");
+    Integer semester = (Integer) session.getAttribute("semester");
+    String gender = (String) session.getAttribute("gender");
+    String address = (String) session.getAttribute("address");
+%>
+
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Student Details</title>
+    <title>Submitted Data</title>
 
     <style>
         body{
@@ -16,50 +25,50 @@
             background:linear-gradient(135deg,#1d2671,#c33764);
         }
 
-        .card{
+        .box{
             width:450px;
+            background:white;
             padding:30px;
             border-radius:20px;
-            background:white;
             box-shadow:0 10px 25px rgba(0,0,0,0.3);
         }
 
         h2{
             text-align:center;
-            color:#333;
+            color:green;
         }
 
         p{
             font-size:18px;
-            padding:8px;
             border-bottom:1px solid #ddd;
+            padding:10px;
         }
 
-        .btn{
+        a{
             display:block;
             text-align:center;
             text-decoration:none;
-            background:#0072ff;
+            background:blue;
             color:white;
             padding:12px;
-            border-radius:10px;
             margin-top:20px;
+            border-radius:10px;
         }
     </style>
 </head>
 <body>
 
-<div class="card">
-    <h2>Submitted Data</h2>
+<div class="box">
+    <h2>Data Saved Successfully</h2>
 
-    <p><b>Course:</b> <%= request.getAttribute("course") %></p>
-    <p><b>Name:</b> <%= request.getAttribute("name") %></p>
-    <p><b>Roll Number:</b> <%= request.getAttribute("roll") %></p>
-    <p><b>Semester:</b> <%= request.getAttribute("semester") %></p>
-    <p><b>Gender:</b> <%= request.getAttribute("gender") %></p>
-    <p><b>Address:</b> <%= request.getAttribute("address") %></p>
+    <p><b>Course:</b> <%= course %></p>
+    <p><b>Name:</b> <%= name %></p>
+    <p><b>Roll:</b> <%= roll %></p>
+    <p><b>Semester:</b> <%= semester %></p>
+    <p><b>Gender:</b> <%= gender %></p>
+    <p><b>Address:</b> <%= address %></p>
 
-    <a href="index.html" class="btn">Back to Form</a>
+    <a href="index.html">Back</a>
 </div>
 
 </body>
