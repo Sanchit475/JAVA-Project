@@ -17,26 +17,13 @@ public class StudentServlet extends HttpServlet {
             HttpServletResponse response)
             throws ServletException, IOException {
 
-        int serial =
-                Integer.parseInt(request.getParameter("serial"));
-
-        String course =
-                request.getParameter("course");
-
-        String name =
-                request.getParameter("name");
-
-        String roll =
-                request.getParameter("roll");
-
+        String course = request.getParameter("course");
+        String name = request.getParameter("name");
+        String roll = request.getParameter("roll");
         int semester =
                 Integer.parseInt(request.getParameter("semester"));
-
-        String gender =
-                request.getParameter("gender");
-
-        String address =
-                request.getParameter("address");
+        String gender = request.getParameter("gender");
+        String address = request.getParameter("address");
 
         response.setContentType("text/html");
         PrintWriter out = response.getWriter();
@@ -46,25 +33,24 @@ public class StudentServlet extends HttpServlet {
                     DBConnection.getConnection();
 
             String sql =
-                    "INSERT INTO students VALUES(?,?,?,?,?,?,?)";
+                    "INSERT INTO students(course,name,roll,semester,gender,address) VALUES(?,?,?,?,?,?)";
 
             PreparedStatement ps =
                     con.prepareStatement(sql);
 
-            ps.setInt(1, serial);
-            ps.setString(2, course);
-            ps.setString(3, name);
-            ps.setString(4, roll);
-            ps.setInt(5, semester);
-            ps.setString(6, gender);
-            ps.setString(7, address);
+            ps.setString(1, course);
+            ps.setString(2, name);
+            ps.setString(3, roll);
+            ps.setInt(4, semester);
+            ps.setString(5, gender);
+            ps.setString(6, address);
 
             int result = ps.executeUpdate();
 
             if(result > 0){
-                out.println("<h2>Data Submitted Successfully!</h2>");
-            } else {
-                out.println("<h2>Submission Failed</h2>");
+                out.println("<h1 style='color:green;text-align:center;'>Data Saved Successfully</h1>");
+            }else{
+                out.println("<h1 style='color:red;text-align:center;'>Failed</h1>");
             }
 
             con.close();
