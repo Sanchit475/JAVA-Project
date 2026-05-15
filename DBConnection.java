@@ -12,6 +12,7 @@ public class DBConnection {
     private static final String PASSWORD = "your_password";
 
     public static Connection getConnection() {
+
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
 
@@ -21,7 +22,7 @@ public class DBConnection {
                     PASSWORD
             );
 
-        } catch (Exception e) {
+        } catch(Exception e) {
             e.printStackTrace();
             return null;
         }
