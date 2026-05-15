@@ -7,14 +7,12 @@ import java.sql.PreparedStatement;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.*;
-import jakarta.servlet.RequestDispatcher;
 
 @WebServlet("/StudentServlet")
 public class StudentServlet extends HttpServlet {
 
-    protected void doPost(
-            HttpServletRequest request,
-            HttpServletResponse response)
+    protected void doPost(HttpServletRequest request,
+                          HttpServletResponse response)
             throws ServletException, IOException {
 
         String course = request.getParameter("course");
@@ -26,14 +24,12 @@ public class StudentServlet extends HttpServlet {
         String address = request.getParameter("address");
 
         try {
-            Connection con =
-                    DBConnection.getConnection();
+            Connection con = DBConnection.getConnection();
 
             String sql =
-                "INSERT INTO students(course,name,roll,semester,gender,address) VALUES(?,?,?,?,?,?)";
+                    "INSERT INTO students(course,name,roll,semester,gender,address) VALUES(?,?,?,?,?,?)";
 
-            PreparedStatement ps =
-                    con.prepareStatement(sql);
+            PreparedStatement ps = con.prepareStatement(sql);
 
             ps.setString(1, course);
             ps.setString(2, name);
@@ -46,21 +42,19 @@ public class StudentServlet extends HttpServlet {
 
             if(result > 0){
 
-                // send data to next page
-                request.setAttribute("course", course);
-                request.setAttribute("name", name);
-                request.setAttribute("roll", roll);
-                request.setAttribute("semester", semester);
-                request.setAttribute("gender", gender);
-                request.setAttribute("address", address);
+                HttpSession session = request.getSession();
 
-                RequestDispatcher rd =
-                        request.getRequestDispatcher("success.jsp");
+                session.setAttribute("course", course);
+                session.setAttribute("name", name);
+                session.setAttribute("roll", roll);
+                session.setAttribute("semester", semester);
+                session.setAttribute("gender", gender);
+                session.setAttribute("address", address);
 
-                rd.forward(request, response);
+                response.sendRedirect("success.jsp");
 
             } else {
-                response.getWriter().println("Submission Failed");
+                response.getWriter().println("Data not saved");
             }
 
             con.close();
