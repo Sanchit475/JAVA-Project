@@ -1,28 +1,20 @@
 package com.example;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
+import java.sql.*;
 
 public class DBConnection {
 
-    private static final String URL =
-            "jdbc:mysql://localhost:3306/studentdb";
-
-    private static final String USER = "root";
-    private static final String PASSWORD = "your_password";
-
     public static Connection getConnection() {
-
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
 
-            return DriverManager.getConnection(
-                    URL,
-                    USER,
-                    PASSWORD
-            );
+            String url = System.getenv("DB_URL");
+            String user = System.getenv("DB_USER");
+            String pass = System.getenv("DB_PASSWORD");
 
-        } catch(Exception e) {
+            return DriverManager.getConnection(url,user,pass);
+
+        } catch(Exception e){
             e.printStackTrace();
             return null;
         }
